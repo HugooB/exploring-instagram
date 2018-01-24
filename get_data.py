@@ -15,12 +15,10 @@ def get_user_info(user_id):
     full_name = user.full_name
     bio = user.bio
     website = user.website
-    key, count_media = user.counts.popitem()
-    key, count_follows = user.counts.popitem()
-    key, count_followed_by = user.counts.popitem()
-    print count_media
-    print count_follows
-    print count_followed_by
+    _, count_media = user.counts.popitem()
+    _, count_follows = user.counts.popitem()
+    _, count_followed_by = user.counts.popitem()
+    return user, username, full_name, bio, website, count_media, count_follows, count_followed_by
 
 
 if __name__ == '__main__':
@@ -31,8 +29,22 @@ if __name__ == '__main__':
     api = InstagramAPI(access_token=access_token, client_secret=client_secret)
 
     # Get the user information
-    get_user_info(user_id)
+    user, username, full_name, bio, website, count_media, count_follows, count_followed_by = get_user_info(user_id)
 
-    recent_media, next_ = api.user_recent_media(user_id=user_id, count=334)
+    # Get most recent media
+    recent_media, next_ = api.user_recent_media(user_id=user_id, count=30)
     for media in recent_media:
-        print media.caption.text
+        likes = media.like_count
+        comments = media.comment_count
+        caption = media.caption.text
+        type = media.type
+        users_in_photo = len(media.users_in_photo)
+        creation_time = media.created_time
+        # location_latitude = media.location // not working..
+        tags = media.tags
+        link = media.link
+        filter = media.filter
+        image_url = media.get_standard_resolution_url()
+
+    # Get this in a table!
+
