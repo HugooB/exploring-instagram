@@ -30,6 +30,7 @@ if __name__ == '__main__':
 
     # Get the user information
     user, username, full_name, bio, website, count_media, count_follows, count_followed_by = get_user_info(user_id)
+    print "Successfully got the information of " + str(full_name) + "!"
 
     # Get most recent media
     recent_media, next_ = api.user_recent_media(user_id=user_id, count=30)
@@ -47,4 +48,6 @@ if __name__ == '__main__':
         image_url = media.get_standard_resolution_url()
 
     # Get this in a table!
+
+    # Download the images!
 
